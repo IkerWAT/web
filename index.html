@@ -2,7 +2,7 @@
 	<head>
 		<meta charset="utf-8">
 	    <title>Prueba de script JQuery</title>
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <!--<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>-->
         <script src="https://code.jquery.com/jquery-migrate-3.4.0.js"></script>
         <script type="text/javascript">
             /* <![CDATA[ */
@@ -48,14 +48,12 @@
             window.onload = function() {
                 console.log("WAT UX active 0.1")
                 // check if jquery exists, if not add a cdn
-                /*
                 if (!window.jQuery) {
                     var jquery = document.createElement('script');
-                    jquery.type = 'text/javascript';
+                    //jquery.type = 'text/javascript';
                     jquery.src = 'https://code.jquery.com/jquery-3.6.4.min.js';
                     document.body.appendChild(jquery);
                 }
-                */
 
                 // Function to check if element is on viewport
                 jQuery.fn.isInViewport = function() {
