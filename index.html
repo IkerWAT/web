@@ -49,8 +49,8 @@
                 // check if jquery exists, if not add a cdn
                 if (!window.jQuery) {
                   var jquery = document.createElement('script');
-                  jquery.src = 'https://code.jquery.com/jquery-3.6.4.min.js';
-                  document.body.appendChild(jquery);
+                  jquery.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
+                  document.head.appendChild(jquery);
                 }
 
                 // Function to check if element is on viewport
