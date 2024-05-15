@@ -49,7 +49,7 @@
 
                 var jquery = document.createElement('script');
                 jquery.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
-                document.body.appendChild(jquery);
+                document.head.appendChild(jquery);
 
                 // Function to check if element is on viewport
                 jQuery.fn.isInViewport = function() {
