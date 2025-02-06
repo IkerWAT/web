@@ -1,98 +1,99 @@
 <html>
-    <head>
-		<meta charset="utf-8">
-	    <title>Prueba de script JQuery</title>
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        <script src="https://code.jquery.com/jquery-migrate-3.4.0.js"></script> 
-        <script type="text/javascript">
-            /* <![CDATA[ */
-            var actionEvents = ['change', 'click', 'contextmenu', 'dblclick', 'focus', 'focusin', 'focusout', 'hover', 'keydown', 'keypress', 'keyup', 'mousedown', 'mouseenter', 'mouseleave', 'mousemove', 'mouseout', 'mouseover'];
-            var viewEvents = ['scroll', 'view', ];
-            var viewListeners = [];
 
-            function actionListener(data) {
-                jQuery(document).one(data.type.toLowerCase(), data.elementSelector, {
-                    checkpoint: data
-                }, function(event) {
-                    var response = {
-                        type: 'checkpointCompleted',
-                        checkId: event.data.checkpoint.checkId,
-                        completed: true,
-                    }
+<head>
+    <meta charset="utf-8">
+    <title>Prueba usabilidad - WAT Lab</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.4.0.js"></script>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        var actionEvents = ['change', 'click', 'contextmenu', 'dblclick', 'focus', 'focusin', 'focusout', 'hover', 'keydown', 'keypress', 'keyup', 'mousedown', 'mouseenter', 'mouseleave', 'mousemove', 'mouseout', 'mouseover'];
+        var viewEvents = ['scroll', 'view',];
+        var viewListeners = [];
 
-                    window.top.postMessage(response, '*');
-                });
-            }
+        function actionListener(data) {
+            jQuery(document).one(data.type.toLowerCase(), data.elementSelector, {
+                checkpoint: data
+            }, function (event) {
+                var response = {
+                    type: 'checkpointCompleted',
+                    checkId: event.data.checkpoint.checkId,
+                    completed: true,
+                }
 
-            function scrollListener() {
-                jQuery(window).on('scroll', function() {
-                    var totalCheckpoints = viewListeners.length;
-                    for (var i = 0; i < totalCheckpoints; i++) {
-                        if (jQuery(viewListeners[i].elementSelector).isInViewport()) {
-                            var response = {
-                                type: 'checkpointCompleted',
-                                checkId: viewListeners[i].checkId,
-                                completed: true,
-                            }
+                window.top.postMessage(response, '*');
+            });
+        }
 
-                            window.top.postMessage(response, '*');
+        function scrollListener() {
+            jQuery(window).on('scroll', function () {
+                var totalCheckpoints = viewListeners.length;
+                for (var i = 0; i < totalCheckpoints; i++) {
+                    if (jQuery(viewListeners[i].elementSelector).isInViewport()) {
+                        var response = {
+                            type: 'checkpointCompleted',
+                            checkId: viewListeners[i].checkId,
+                            completed: true,
                         }
+
+                        window.top.postMessage(response, '*');
                     }
-                });
-            }
-
-            function alerts(message) {
-                alert(message);
-            }
-
-            window.onload = function() {
-                console.log("WAT UX active 0.1")
-
-                // Function to check if element is on viewport
-                jQuery.fn.isInViewport = function() {
-                    if (jQuery(this).length) {
-                        var elementTop = jQuery(this).offset().top;
-                        var elementBottom = elementTop + jQuery(this).outerHeight();
-
-                        var viewportTop = jQuery(window).scrollTop();
-                        var viewportBottom = viewportTop + jQuery(window).height();
-
-                        return elementBottom > viewportTop && elementTop < viewportBottom;
-                    }
-
-                    return false;
-                }
-
-                // Register scroll listener
-                scrollListener();
-
-                // Send parent of the iframe info of the page loaded
-                var data = {
-                    type: 'pageLoaded',
-                    url: window.location.href,
-                    client_id: "0b2277db-3c4e-4847-b2f3-d27c9bd0b1bb-4366",
-                }
-
-                window.top.postMessage(data, '*');
-            }
-
-            // Listen for parent events
-            window.addEventListener('message', function(event) {
-                if (event.data.length < 1) {
-                    return;
-                }
-
-                if (actionEvents.includes(event.data.type.toLowerCase())) {
-                    actionListener(event.data);
-                }
-
-                if (viewEvents.includes(event.data.type.toLowerCase())) {
-                    viewListeners.push(event.data);
                 }
             });
-            /* ]]> */
-        </script>
-	<style>
+        }
+
+        function alerts(message) {
+            alert(message);
+        }
+
+        window.onload = function () {
+            console.log("WAT UX active 0.1")
+
+            // Function to check if element is on viewport
+            jQuery.fn.isInViewport = function () {
+                if (jQuery(this).length) {
+                    var elementTop = jQuery(this).offset().top;
+                    var elementBottom = elementTop + jQuery(this).outerHeight();
+
+                    var viewportTop = jQuery(window).scrollTop();
+                    var viewportBottom = viewportTop + jQuery(window).height();
+
+                    return elementBottom > viewportTop && elementTop < viewportBottom;
+                }
+
+                return false;
+            }
+
+            // Register scroll listener
+            scrollListener();
+
+            // Send parent of the iframe info of the page loaded
+            var data = {
+                type: 'pageLoaded',
+                url: window.location.href,
+                client_id: "0b2277db-3c4e-4847-b2f3-d27c9bd0b1bb-4366",
+            }
+
+            window.top.postMessage(data, '*');
+        }
+
+        // Listen for parent events
+        window.addEventListener('message', function (event) {
+            if (event.data.length < 1) {
+                return;
+            }
+
+            if (actionEvents.includes(event.data.type.toLowerCase())) {
+                actionListener(event.data);
+            }
+
+            if (viewEvents.includes(event.data.type.toLowerCase())) {
+                viewListeners.push(event.data);
+            }
+        });
+        /* ]]> */
+    </script>
+    <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -143,7 +144,7 @@
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: #a05013;
         }
 
         .content {
@@ -157,7 +158,7 @@
             padding: 20px;
             margin: 10px 0;
             border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         footer {
@@ -170,13 +171,27 @@
             width: 100%;
         }
 
+        a:link, a:visited {
+            background-color: #f44336;
+            color: white;
+            padding: 14px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        a:hover, a:active {
+            background-color: red;
+        }
+
         .spacer {
-            height: 2000px; /* Añadido para permitir scroll */
+            height: 2000px;
         }
     </style>
-	</head>
+</head>
+
 <body>
-<header>
+    <header>
         <h1>Página de información 2</h1>
     </header>
 
@@ -199,8 +214,11 @@
         <button id="submitButton">Enviar</button>
     </div>
 
+    <a href="info.html">Volver a la página de información</a>
+
     <footer>
-        <p>&copy; 2025 Página Web</p>
+        <p>&copy; 2025 - WAT Lab</p>
     </footer>
-    </body>
-    </html>
+</body>
+
+</html>
